@@ -29,10 +29,7 @@ class Pokemon:
         return hash(self.name)
     
     def __eq__(self, other):
-        if not isinstance(other, Pokemon):
-            return False
-        else:
-            return self.name == other.name
+        return self.name == other.name
                     
     def get_damage(self, damage):
         self.hp -= damage
