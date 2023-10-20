@@ -43,11 +43,17 @@ class Game:
             pokemon['types'] 
             ))
         
+    def update_pokemons(self):
+        for pokemon in self.pokedex:
+            if pokemon.name in self.pokemons:
+                del self.pokemons[pokemon.name]
+        
     def mainloop(self):
         self.choose_starter()
         
         while True:
             self.clear_console()
+            self.update_pokemons()
             break
         
         
