@@ -19,6 +19,18 @@ class Pokemon:
                 else:
                     self.damage_relations[key] = value
                     
+    def __str__(self):
+        return self.name
+    
+    def __hash__(self):
+        return hash(self.name)
+    
+    def __eq__(self, other):
+        if not isinstance(other, Pokemon):
+            return False
+        else:
+            return self.name == other.name
+                    
     def get_damage(self, damage):
         self.hp -= damage
         if self.hp <= 0:
@@ -42,4 +54,12 @@ if __name__ == '__main__':
         bulbasaur['types']
         )
     
-    print(bulbasaur1.hp, bulbasaur1.attack, bulbasaur1.damage_relations)
+    bulbasaur2 = Pokemon(
+        bulbasaur['name'],
+        bulbasaur['stats']['hp'], 
+        bulbasaur['stats']['attack'], 
+        bulbasaur['stats']['defense'], 
+        bulbasaur['types']
+        )
+    
+    print(set([bulbasaur1, bulbasaur2]))
