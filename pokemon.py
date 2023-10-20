@@ -1,3 +1,6 @@
+from . import utils
+
+
 class Pokemon:
     
     def __init__(self, name, hp, attack, defence, types, speed):
@@ -6,6 +9,7 @@ class Pokemon:
         self.max_hp = self.hp
         self.attack = attack + speed * 0.1
         self.types = types
+        self.damage_relations = utils.get_damage_relations(type)
         
     def get_damage(self, damage):
         self.hp -= damage
