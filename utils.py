@@ -27,6 +27,27 @@ def get_info(url):
         return info
     
     
+def get_damage_relations(type_name):
+    url = f'https://pokeapi.co/api/v2/type/{type_name}'
+    response = requests.get(url)
+    
+    if response.status_code != 200:
+        return None
+    else:
+        relations = {}
+        data = response.json()['damage_relations']
+        relations['double_from'] = [t['name'] for t in data['double_damage_from']]
+        relations['half_from'] = [t['name'] for t in data['half_damage_from']]
+        relations['double_to'] = [t['name'] for t in data['double_damage_to']]
+        relations['half_to'] = [t['name'] for t in data['half_damage_to']]
+        return relations
+    
+    
 if __name__ == '__main__':
     pokemons = get_pokemons(20)
-    print(get_info(pokemons['charmander']))
+    charmander = get_info(pokemons['charmander'])
+    print(charmander)
+    
+    for t in charmander['types']:
+        damage_relations = get_damage_relations(t)
+        print(damage_relations)
