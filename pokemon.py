@@ -22,6 +22,9 @@ class Pokemon:
     def __str__(self):
         return self.name
     
+    def __repr__(self):
+        return self.name
+    
     def __hash__(self):
         return hash(self.name)
     
@@ -62,4 +65,5 @@ if __name__ == '__main__':
         bulbasaur['types']
         )
     
+    print(bulbasaur1)
     print(set([bulbasaur1, bulbasaur2]))
