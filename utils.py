@@ -8,11 +8,11 @@ def get_pokemons(limit):
     if response.status_code != 200:
         return None
     else:
-        return {i: (pokemon['name'], pokemon['url']) for i, pokemon in enumerate(response.json()['results'])}
+        return {pokemon['name']: pokemon['url'] for pokemon in response.json()['results']}
     
     
-def get_info(pokemon):
-    response = requests.get(pokemon[1])
+def get_info(url):
+    response = requests.get(url)
     info = {}
     
     if response.status_code != 200:
@@ -21,11 +21,12 @@ def get_info(pokemon):
         data = response.json()
         stats = {stat['stat']['name']: stat['base_stat'] for stat in data['stats']}
         types = [t['type']['name'] for t in data['types']]
-        info['name'] = pokemon[0]
+        info['name'] = data['name']
         info['stats'] = stats
         info['types'] = types
         return info
     
     
 if __name__ == '__main__':
-    pass
+    pokemons = get_pokemons(20)
+    print(get_info(pokemons['charmander']))
