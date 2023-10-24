@@ -35,7 +35,6 @@ class Game:
         print(f'Great choice, your {chosen_poke} is super cute!')
         pokemon = self.create_pokemon(chosen_poke)
         self.pokedex.add(pokemon)
-        time.sleep(2)
 
     def create_pokemon(self, name):
         pokemon = utils.get_info(self.pokemons[name.lower()])
@@ -50,7 +49,19 @@ class Game:
     def encounter(self):
         encountered = random.choice(list(self.pokemons.keys()))
         enemy = self.create_pokemon(encountered)
-        print(enemy)
+
+        choice = '-1'
+        while choice not in ['1', '2']:
+            self.clear_console()
+            print(f'Wild {enemy.name.title()} appears!')
+            print("Choose what to do:\nFight - 1\t Leave - 2")
+            choice = input('Enter 1 or 2: ')
+        
+        if choice == '1':
+            self.battle()
+
+    def battle(self):
+        print('battle')
         
     def update_pokemons(self):
         for pokemon in self.pokedex:
@@ -59,6 +70,8 @@ class Game:
         
     def mainloop(self):
         self.choose_starter()
+        print("\n--- Your journey begins! ---\n")
+        input('Press enter to continue')
         
         while True:
             self.clear_console()
