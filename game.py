@@ -1,5 +1,6 @@
 import os
 import time
+import random
 
 from pokemon import Pokemon
 import utils
@@ -23,25 +24,33 @@ class Game:
             os.system('cls')
     
     def choose_starter(self):
-        choice = 0
+        choice = '0'
         
-        while choice not in [1, 2, 3]:
+        while choice not in ['1', '2', '3']:
             self.clear_console()
             print(f'Choose starter pokemon:\n1 - {self.starters[0]}\n2 - {self.starters[1]}\n3 - {self.starters[2]}\n')
-            choice = int(input('Enter 1, 2 or 3: '))
+            choice = input('Enter 1, 2 or 3: ')
             
-        chosen_poke = self.starters[choice - 1]
+        chosen_poke = self.starters[int(choice) - 1]
         print(f'Great choice, your {chosen_poke} is super cute!')
+        pokemon = self.create_pokemon(chosen_poke)
+        self.pokedex.add(pokemon)
         time.sleep(2)
-        
-        pokemon = utils.get_info(self.pokemons[chosen_poke.lower()])
-        self.pokedex.add(Pokemon(
+
+    def create_pokemon(self, name):
+        pokemon = utils.get_info(self.pokemons[name.lower()])
+        return Pokemon(
             pokemon['name'],
             pokemon['stats']['hp'], 
             pokemon['stats']['attack'], 
             pokemon['stats']['defense'], 
             pokemon['types'] 
-            ))
+            )
+
+    def encounter(self):
+        encountered = random.choice(list(self.pokemons.keys()))
+        enemy = self.create_pokemon(encountered)
+        print(enemy)
         
     def update_pokemons(self):
         for pokemon in self.pokedex:
@@ -54,6 +63,7 @@ class Game:
         while True:
             self.clear_console()
             self.update_pokemons()
+            self.encounter()
             break
         
         
